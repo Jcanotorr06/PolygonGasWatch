@@ -24,7 +24,7 @@ const NavBar = () => {
                   <Grid item>
                       <Grid container columnSpacing={1}>
                         <Grid item>
-                            <img src="/logo.svg" alt="" />
+                            <img src="https://raw.githubusercontent.com/Jcanotorr06/images/25b983a0fda2acb07372475969fba7b1fe13370f/polygongaswatch.svg" alt="" />
                         </Grid>
                         <Grid item>
                             <Typography fontWeight="bold" lineHeight={1.5} variant="h4">

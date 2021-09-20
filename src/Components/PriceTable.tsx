@@ -1,6 +1,8 @@
-import {Table, TableBody, TableHead, TableCell, TableContainer, TableRow, Container, Typography} from '@mui/material'
+import {Table, TableBody, TableHead, TableCell, TableContainer, TableRow, Container, Typography, Stack} from '@mui/material'
 import { styled } from '@mui/system';
 import Section from './Section'
+import Context from '../Context';
+import { useContext } from 'react';
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(even)': {
@@ -29,84 +31,105 @@ interface transaction{
     fastest: number
     fast: number
     standard: number
+    imageURL: string
 }
 
-const transactions : transaction[] = [
-    {
-        name: 'MATIC',
-        interaction: 'Transfer',
-        gasUsed: 21000,
-        fastest: 0.0035,
-        fast: 0.0015,
-        standard: 0.0005
-    },
-    {
-        name: 'ETH',
-        interaction: 'Transfer',
-        gasUsed: 21000,
-        fastest: 0.0035,
-        fast: 0.0015,
-        standard: 0.0005
-    },
-    {
-        name: 'USDT',
-        interaction: 'Transfer',
-        gasUsed: 21000,
-        fastest: 0.0035,
-        fast: 0.0015,
-        standard: 0.0005
-    },
-    {
-        name: 'USDC',
-        interaction: 'Transfer',
-        gasUsed: 21000,
-        fastest: 0.0035,
-        fast: 0.0015,
-        standard: 0.0005
-    },
-    {
-        name: 'DAI',
-        interaction: 'Transfer',
-        gasUsed: 21000,
-        fastest: 0.0035,
-        fast: 0.0015,
-        standard: 0.0005
-    },
-    {
-        name: 'QuickSwap',
-        interaction: 'Swap',
-        gasUsed: 21000,
-        fastest: 0.0035,
-        fast: 0.0015,
-        standard: 0.0005
-    },
-    {
-        name: 'SushiSwap',
-        interaction: 'Swap',
-        gasUsed: 21000,
-        fastest: 0.0035,
-        fast: 0.0015,
-        standard: 0.0005
-    },
-    {
-        name: 'DFYN',
-        interaction: 'Swap',
-        gasUsed: 21000,
-        fastest: 0.0035,
-        fast: 0.0015,
-        standard: 0.0005
-    },
-    {
-        name: 'AAVE',
-        interaction: 'Lend',
-        gasUsed: 21000,
-        fastest: 0.0035,
-        fast: 0.0015,
-        standard: 0.0005
-    },
-]
 
 const PriceTable = () => {
+    const {gasData} = useContext(Context.GasContext)
+    const transactions : transaction[] = [
+        {
+            name: 'MATIC',
+            interaction: 'Transfer',
+            gasUsed: 21000,
+            fastest: parseFloat((((21000*gasData.fastest)/1000000000)*gasData.price).toFixed(6)),
+            fast: parseFloat((((21000*gasData.fast)/1000000000)*gasData.price).toFixed(6)),
+            standard: parseFloat((((21000*gasData.standard)/1000000000)*gasData.price).toFixed(6)),
+            imageURL: 'https://raw.githubusercontent.com/Jcanotorr06/images/main/coins/matic.png'
+        },
+        {
+            name: 'ETH',
+            interaction: 'Transfer',
+            gasUsed: 44193,
+            fastest: parseFloat((((44193*gasData.fastest)/1000000000)*gasData.price).toFixed(6)),
+            fast: parseFloat((((44193*gasData.fast)/1000000000)*gasData.price).toFixed(6)),
+            standard: parseFloat((((44193*gasData.standard)/1000000000)*gasData.price).toFixed(6)),
+            imageURL: 'https://raw.githubusercontent.com/Jcanotorr06/images/main/coins/eth.png'
+        },
+        {
+            name: 'USDT',
+            interaction: 'Transfer',
+            gasUsed: 63247,
+            fastest: parseFloat((((63247*gasData.fastest)/1000000000)*gasData.price).toFixed(6)),
+            fast: parseFloat((((63247*gasData.fast)/1000000000)*gasData.price).toFixed(6)),
+            standard: parseFloat((((63247*gasData.standard)/1000000000)*gasData.price).toFixed(6)),
+            imageURL: 'https://raw.githubusercontent.com/Jcanotorr06/images/main/coins/usdt.png'
+        },
+        {
+            name: 'USDC',
+            interaction: 'Transfer',
+            gasUsed: 72645,
+            fastest: parseFloat((((72645*gasData.fastest)/1000000000)*gasData.price).toFixed(6)),
+            fast: parseFloat((((72645*gasData.fast)/1000000000)*gasData.price).toFixed(6)),
+            standard: parseFloat((((72645*gasData.standard)/1000000000)*gasData.price).toFixed(6)),
+            imageURL: 'https://raw.githubusercontent.com/Jcanotorr06/images/main/coins/usdc.png'
+        },
+        {
+            name: 'DAI',
+            interaction: 'Transfer',
+            gasUsed: 63181,
+            fastest: parseFloat((((63181*gasData.fastest)/1000000000)*gasData.price).toFixed(6)),
+            fast: parseFloat((((63181*gasData.fast)/1000000000)*gasData.price).toFixed(6)),
+            standard: parseFloat((((63181*gasData.standard)/1000000000)*gasData.price).toFixed(6)),
+            imageURL: 'https://raw.githubusercontent.com/Jcanotorr06/images/main/coins/dai.png'
+        },
+        {
+            name: 'QuickSwap',
+            interaction: 'Swap',
+            gasUsed: 282804,
+            fastest: parseFloat((((282804*gasData.fastest)/1000000000)*gasData.price).toFixed(6)),
+            fast: parseFloat((((282804*gasData.fast)/1000000000)*gasData.price).toFixed(6)),
+            standard: parseFloat((((282804*gasData.standard)/1000000000)*gasData.price).toFixed(6)),
+            imageURL: 'https://raw.githubusercontent.com/Jcanotorr06/images/main/coins/quick.png'
+        },
+        {
+            name: 'SushiSwap',
+            interaction: 'Swap',
+            gasUsed: 189663,
+            fastest: parseFloat((((189663*gasData.fastest)/1000000000)*gasData.price).toFixed(6)),
+            fast: parseFloat((((189663*gasData.fast)/1000000000)*gasData.price).toFixed(6)),
+            standard: parseFloat((((189663*gasData.standard)/1000000000)*gasData.price).toFixed(6)),
+            imageURL: 'https://raw.githubusercontent.com/Jcanotorr06/images/main/coins/sushi.png'
+        },
+        {
+            name: 'DFYN',
+            interaction: 'Swap',
+            gasUsed: 172762,
+            fastest: parseFloat((((172762*gasData.fastest)/1000000000)*gasData.price).toFixed(6)),
+            fast: parseFloat((((172762*gasData.fast)/1000000000)*gasData.price).toFixed(6)),
+            standard: parseFloat((((172762*gasData.standard)/1000000000)*gasData.price).toFixed(6)),
+            imageURL: 'https://raw.githubusercontent.com/Jcanotorr06/images/main/coins/dfyn.png'
+        },
+        {
+            name: 'AAVE',
+            interaction: 'Lend',
+            gasUsed: 445300,
+            fastest: parseFloat((((445300*gasData.fastest)/1000000000)*gasData.price).toFixed(6)),
+            fast: parseFloat((((445300*gasData.fast)/1000000000)*gasData.price).toFixed(6)),
+            standard: parseFloat((((445300*gasData.standard)/1000000000)*gasData.price).toFixed(6)),
+            imageURL: 'https://raw.githubusercontent.com/Jcanotorr06/images/main/coins/aave.png'
+        },
+        {
+            name: 'AAVE',
+            interaction: 'Borrow',
+            gasUsed: 921969,
+            fastest: parseFloat((((921969*gasData.fastest)/1000000000)*gasData.price).toFixed(6)),
+            fast: parseFloat((((921969*gasData.fast)/1000000000)*gasData.price).toFixed(6)),
+            standard: parseFloat((((921969*gasData.standard)/1000000000)*gasData.price).toFixed(6)),
+            imageURL: 'https://raw.githubusercontent.com/Jcanotorr06/images/main/coins/aave.png'
+        },
+    ]
+
     return (
         <Container maxWidth="xl">
             <Section padding={6}>
@@ -139,7 +162,14 @@ const PriceTable = () => {
                             {transactions.map((transaction, i) => (
                                 <StyledTableRow key={i}>
                                     <TableCell>
-                                        {transaction.name}
+                                        <Stack spacing={2} direction="row">
+                                            <div>
+                                                <img src={transaction.imageURL} alt="" />
+                                            </div>
+                                            <div>
+                                                {transaction.name}
+                                            </div>
+                                        </Stack>
                                     </TableCell>
                                     <TableCell>
                                         {transaction.interaction}

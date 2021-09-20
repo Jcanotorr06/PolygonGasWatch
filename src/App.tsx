@@ -1,5 +1,5 @@
 import {ThemeProvider, createTheme, Paper} from '@mui/material'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { NavBar, GasPrices, PriceTable, Calculator, Footer } from './Components';
 import Context from './Context';
 import { styled } from '@mui/material/styles';
@@ -15,16 +15,20 @@ interface gas{
 
 const App = () => {
   const [dark, setDark] = useState<boolean>(false)
-  const [gasData, setGasData] = useState<gas>({safeLow: 0, standard: 0, fast: 0, fastest: 0, price: 0})
-
+  const [gasData, setGasData] = useState<gas | any>({safeLow: 0, standard: 0, fast: 0, fastest: 0, price: 0})
+  const [preset, setPreset] = useState<string>('custom')
+  const [gasPrice, setGasPrice] = useState<number>(0)
+  const [costMatic, setCostMatic] = useState<number>(0)
+  const [costUSD, setCostUSD] = useState<number>(0)
+  const gasUsed = useRef<any>()
+  const gasPriceRef = useRef<any>()
 
   useEffect(() => {
     const fetchData = async() =>{
-      await axios.get(`https://api.polygonscan.com/api?module=stats&action=maticprice&apikey=${process.env.REACT_APP_POLYGON_API_KEY}`)
+      await axios.get(`https://api.polygonscan.com/api?module=stats&action=maticprice&apikey=YourApiKeyToken`)
       .then(async resp => {
         await axios.get('https://gasstation-mainnet.matic.network')
         .then(res =>{
-          console.log(res.data)
           let data:gas = {
             safeLow: res.data.safeLow,
             standard: res.data.standard,
@@ -33,6 +37,7 @@ const App = () => {
             price: parseFloat(resp.data.result.maticusd)
           }
           setGasData(data)
+          document.title = `${Math.ceil(res.data.fastest)} - ${Math.ceil(res.data.standard)} Gwei`
         })
         .catch(err => {
           console.log(err)
@@ -46,7 +51,7 @@ const App = () => {
     fetchData()
     const interval = setInterval(() =>{
       fetchData()
-    }, 5000)
+    }, 10000)
 
     return () => clearInterval(interval)
   }, [])
@@ -83,11 +88,11 @@ const App = () => {
     <Context.ThemeContext.Provider value={{dark, setDark}}>
       <Context.GasContext.Provider value={{gasData, setGasData}}>
         <ThemeProvider theme={th}>
-          <Background elevation={0}>
+          <Background elevation={0} className="yes">
             <NavBar/>
             <GasPrices/>
             <PriceTable/>
-            <Calculator/>
+            <Calculator preset={preset} setPreset={setPreset} gasUsed={gasUsed} gasPriceRef={gasPriceRef} gasPrice={gasPrice} setGasPrice={setGasPrice} costMatic={costMatic} setCostMatic={setCostMatic} costUSD={costUSD} setCostUSD={setCostUSD}/>
             <Footer/>
           </Background>
         </ThemeProvider>

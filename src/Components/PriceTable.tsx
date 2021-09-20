@@ -1,4 +1,4 @@
-import {Table, TableBody, TableHead, TableCell, TableContainer, TableRow, Container, Typography, Stack} from '@mui/material'
+import {Table, TableBody, TableHead, TableCell, TableContainer, TableRow, Container, Typography, Stack, TableFooter} from '@mui/material'
 import { styled } from '@mui/system';
 import Section from './Section'
 import Context from '../Context';
@@ -162,7 +162,7 @@ const PriceTable = () => {
                             {transactions.map((transaction, i) => (
                                 <StyledTableRow key={i}>
                                     <TableCell>
-                                        <Stack spacing={2} direction="row">
+                                        <Stack spacing={1} direction="row">
                                             <div>
                                                 <img src={transaction.imageURL} alt="" />
                                             </div>
@@ -175,7 +175,9 @@ const PriceTable = () => {
                                         {transaction.interaction}
                                     </TableCell>
                                     <TableCell>
-                                        {transaction.gasUsed}
+                                        <Typography color={transaction.name !== 'MATIC' ? ("#8247E5") : '#000000'}>
+                                            {transaction.gasUsed}
+                                        </Typography>
                                     </TableCell>
                                     <TableCell>
                                         {`$${transaction.fastest}`}
@@ -190,6 +192,11 @@ const PriceTable = () => {
                                 </StyledTableRow>
                             ))}
                         </TableBody>
+                        <TableFooter>
+                            <Typography variant="subtitle1" color="#C9C9C9" paddingY={2}>
+                                * There may be gaps in actual transactions, for reference only
+                            </Typography>
+                        </TableFooter>
                     </Table>
                 </StyledTableContainer>
             </Section>
